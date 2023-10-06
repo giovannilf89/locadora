@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  u_id       String    @id @default(uuid())
+  u_name     String
+  u_email    String
+  u_password String
+  creat_at   DateTime? @default(now())
+  update_at  DateTime? @default(now())
+
+  @@map("users")
+}
+
+model Movie {
+  m_id       String    @id @default(uuid())
+  m_name     String
+  m_director String
+  m_duration String
+  create_at  DateTime? @default(now())
+  update_at  DateTime? @default(now())
+
+  genres  Genre  @relation(fields: [genreId], references: [g_id]) // 1- nome da tabela 2- nome do modelo
+  genreId String
+
+  @@map("movies")
+}
+
+model Genre {
+  g_id      String    @id @default(uuid())
+  g_name    String
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+  movies    Movie[] // 1 genre possui muitos filmes
+
+  @@map("genres")
+}
