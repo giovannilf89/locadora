@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateUserServices } from "../services/CreateUserService";
+import { CreateUserServices } from "../../services/user/CreateUserService";
 
 class CreateUserController {
   async handle(req: Request, res: Response) {
